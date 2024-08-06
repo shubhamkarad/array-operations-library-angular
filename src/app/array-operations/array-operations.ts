@@ -37,4 +37,34 @@ export class ArrayOperations {
     }
     return result;
   }
+
+  static flatten<T>(nestedArray: T[][]): T[] {
+    const result: T[] = [];
+    for (const array of nestedArray) {
+      result.push(...array);
+    }
+    return result;
+  }
+
+  static unique<T>(array: T[]): T[] {
+    const seen: Set<T> = new Set();
+    const result: T[] = [];
+    for (const value of array) {
+      if (!seen.has(value)) {
+        seen.add(value);
+        result.push(value);
+      }
+    }
+    return result;
+  }
+
+  static intersection<T>(array1: T[], array2: T[]): T[] {
+    const set2: Set<T> = new Set(array2);
+    return ArrayOperations.filter(array1, (value) => set2.has(value));
+  }
+
+  static union<T>(array1: T[], array2: T[]): T[] {
+    const combined: T[] = [...array1, ...array2];
+    return ArrayOperations.unique(combined);
+  }
 }
